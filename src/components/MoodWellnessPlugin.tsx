@@ -4,7 +4,16 @@ import { WellnessTrack } from '../services/audioArchiveService';
 
 type WorkflowStep = 'current_mood' | 'intensity' | 'desired_state' | 'preferences' | 'duration' | 'playback';
 
-export const MoodWellnessPlugin: React.FC = () => {
+interface MoodWellnessPluginProps {
+  onSessionComplete?: (data: {
+    currentMood: string;
+    intensity: number;
+    desiredState: string;
+    score: string;
+  }) => void;
+}
+
+export const MoodWellnessPlugin: React.FC<MoodWellnessPluginProps> = ({ onSessionComplete }) => {
   // Wizard Configuration Workflow States
   const [step, setStep] = useState<WorkflowStep>('current_mood');
   const [currentMood, setCurrentMood] = useState<string>('');
@@ -65,6 +74,8 @@ export const MoodWellnessPlugin: React.FC = () => {
         payload: { currentMood, intensity, desiredState, selectedPrefs, duration, score }
       })
     }).catch((err) => console.warn('[Telemetry Logging Blocked]:', err.message));
+
+    onSessionComplete?.({ currentMood, intensity, desiredState, score });
 
     handleRestartWorkflow();
   };
