@@ -8,7 +8,7 @@ const mockTracks: WellnessTrack[] = [
   { id: 'id_1', title: 'Test Ambient Tune', artist: 'Artist Test', duration: 120, audioUrl: 'test.mp3' }
 ];
 
-describe('Step 5: AudioPlayerContainer DOM Interaction Assertions', () => {
+describe(' AudioPlayerContainer DOM Interaction Assertions', () => {
   it('should render the audio metadata strings correctly', () => {
     render(
       <AudioPlayerContainer 
